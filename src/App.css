@@ -1,0 +1,88 @@
+/* फॉर्मसाठी सामान्य स्टाईल्स */
+.form-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.input-group label {
+    font-weight: bold;
+    min-width: 150px;
+    margin-right: 10px;
+}
+
+.input-group input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.print-button, .add-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.print-button {
+    background-color: #007bff;
+    color: white;
+    margin-right: 10px;
+}
+.print-button:hover {
+    background-color: #0056b3;
+}
+
+.add-button {
+    background-color: #28a745;
+    color: white;
+}
+.add-button:hover {
+    background-color: #1e7e34;
+}
+
+/* साक्षदार इनपुट टेबल स्टाईलिंग */
+.witness-input-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.witness-input-table th,
+.witness-input-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.witness-input-table th {
+    background-color: #e9ecef;
+}
+
+.witness-input-table input {
+    width: 95%;
+    border: none;
+    padding: 0;
+}
+
+/* प्रिंट लेआउटसाठी स्टाईल्स (PrintLayout.js) */
+.data-placeholder {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Note: A4 paper specific alignment is handled in the handlePrint function's embedded CSS for precision. */
