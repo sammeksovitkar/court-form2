@@ -9,6 +9,9 @@ import {
 import SummonsFormInput from './component/SummonsFormInput';
 import Placeholder from './component/Placeholder';
 import DashboardOverview from './component/DashboardOverview';
+import Liabrary from './component/Liabrary';
+import NegotiableSummons from './component/NegotiableSummons';
+import ArrestWarrantApp from './component/Arrestwarrant';
 
 
 const App = () => {
@@ -21,14 +24,15 @@ const App = () => {
         { id: 'dashboard', name: 'मुख्य डॅशबोर्ड (Dashboard)', icon: <BarChart2 size={20} /> },
         { id: 'applications', name: 'अर्ज व्यवस्थापन (Applications)', icon: <ClipboardList size={20} /> },
         { id: 'schedule', name: 'सुनावणी वेळापत्रक (Schedule)', icon: <Calendar size={20} /> },
-        { id: 'stats', name: 'खटला सांख्यिकी (Statistics)', icon: <BarChart2 size={20} /> },
+        { id: 'stats', name: 'Library Management', icon: <BarChart2 size={20} /> },
         { id: 'staff', name: 'कर्मचारी व्यवस्थापन (Staff)', icon: <Users size={20} /> },
     ];
 
     // अर्ज उप-मेनू (Applications Sub-menu)
     const applicationForms = [
         { id: 'summons', name: 'समन्स अर्ज (Summons Application)', component: SummonsFormInput },
-        { id: 'warrant', name: 'वॉरंट अर्ज (Warrant Application)', component: Placeholder },
+        { id: 'warrant', name: 'समन्स अर्ज (NI 138)', component: NegotiableSummons },
+        { id: 'warrant2', name: 'वॉरंट अर्ज (Warrant Application)', component: ArrestWarrantApp },
     ];
 
     // वर्तमान पृष्ठानुसार सामग्री प्रस्तुत करण्यासाठी फंक्शन (Function to render content)
@@ -49,7 +53,7 @@ const App = () => {
             case 'schedule':
                 return <Placeholder title="सुनावणी वेळापत्रक (Hearing Schedule)" />;
             case 'stats':
-                return <Placeholder title="खटला सांख्यिकी (Case Statistics)" />;
+                return <Liabrary/>;
             case 'staff':
                 return <Placeholder title="कर्मचारी व्यवस्थापन (Staff Management)" />;
             default:

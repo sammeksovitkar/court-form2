@@ -10,3 +10,6 @@ const Placeholder = ({ title }) => (
     </div>
 );
 export default Placeholder
+
+
+// /frontend/src/App.js
