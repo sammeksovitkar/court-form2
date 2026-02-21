@@ -15,6 +15,7 @@ import ArrestWarrantApp from './component/Arrestwarrant';
 import MuddemalManagement from './component/MuddemalManagement';
 import StaffInformationTable from './component/StaffInformationTable';
 import AssetViewPage from './component/AssetViewPage'; 
+import Kharda from './component/Kharda';
 
 const App = () => {
     return (
@@ -40,12 +41,13 @@ const [courtConfig, setCourtConfig] = useState({
         courtVillage: '',
         taluka: '',
         district: '',
-        policeStation: ''
+        policeStation: '',
+        fullOfficeName:''
     });
     const navItems = [
         { id: 'dashboard', name: 'मुख्य डॅशबोर्ड (Dashboard)', icon: <BarChart2 size={20} /> },
         { id: 'applications', name: 'अर्ज व्यवस्थापन (Applications)', icon: <ClipboardList size={20} /> },
-        // { id: 'stats', name: 'Library Management', icon: <BarChart2 size={20} /> },
+        { id: 'stats', name: 'Kharda', icon: <BarChart2 size={20} /> },
         // { id: 'staff', name: 'कर्मचारी व्यवस्थापन (Staff)', icon: <BarChart2 size={20} /> },
         // { id: 'muddemal', name: 'मुद्देमाल व्यवस्थापन (Muddemal)', icon: <Users size={20} /> },
     ];
@@ -88,7 +90,7 @@ const updateCourtConfig = (newData) => {
                 />
             );
         case 'stats': 
-            return <Liabrary />;
+            return <Kharda />;
         case 'staff': 
             return <StaffInformationTable title="कर्मचारी व्यवस्थापन" />;
         case 'muddemal': 
@@ -124,7 +126,7 @@ const updateCourtConfig = (newData) => {
 
             <div className={`fixed lg:relative w-64 min-h-screen bg-indigo-800 text-white z-20 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 shadow-2xl`}>
                 <div className="p-6 text-2xl font-extrabold border-b border-indigo-700 tracking-wider flex items-center bg-indigo-900">
-                    <Gavel className="mr-3 text-teal-400" size={28} /> मनमाड न्यायालय
+                    <Gavel className="mr-3 text-teal-400" size={28} /> न्यायालय
                 </div>
                 <nav className="p-4 space-y-2">
                     {navItems.map(item => (
@@ -164,7 +166,9 @@ const updateCourtConfig = (newData) => {
                     </div>
                 </header>
                 <main className="flex-1 p-4 md:p-8">{renderContent()}</main>
-                <footer className="bg-white text-center p-3 text-xs text-gray-400 border-t mt-auto no-print">न्यायालयीन व्यवस्थापन प्रणाली &copy; {new Date().getFullYear()} | मनमाड न्यायिक जिल्हा.</footer>
+                {/* <footer className="bg-white text-center p-3 text-xs text-gray-400 border-t mt-auto no-print"> &copy; {new Date().getFullYear()} </footer> */}
+                            <footer className="bg-white text-center p-3 text-xs text-gray-400 border-t mt-auto no-print">Developed By Sammek Sovitkar (JR Clark Manmad City)</footer>
+
             </div>
             {isSidebarOpen && <div className="fixed inset-0 bg-black opacity-50 z-10 lg:hidden" onClick={() => setIsSidebarOpen(false)}></div>}
         </div>
@@ -206,7 +210,7 @@ const LoginPage = ({ onLogin }) => {
                 <div className="p-8 bg-indigo-700 text-white text-center rounded-t-3xl">
                     <Gavel className="mx-auto mb-3 text-teal-400" size={48} />
                     <h1 className="text-3xl font-extrabold tracking-wider">न्यायालयीन प्रणाली</h1>
-                    <p className="text-indigo-200 mt-1">न्यायव्यवस्थापन ॲप्लिकेशन</p>
+                    <p className="text-indigo-200 mt-1">वॉरंट / समन्स / नोटीस तयार करणे </p>
                 </div>
                 
                 <form onSubmit={handleLogin} className="p-8 space-y-6">
