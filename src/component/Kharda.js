@@ -80,7 +80,7 @@ const CourtDiaryFinalFix = () => {
     });
   }, [rawData, selection]); // Dependencies fixed
 
- const generatePDF = () => {
+const generatePDF = () => {
     if (filteredData.length === 0) return alert("No records selected!");
     setIsLoading(true);
     
@@ -88,7 +88,6 @@ const CourtDiaryFinalFix = () => {
       const doc = new jsPDF('p', 'mm', 'a4');
       let currentY = 15;
 
-      // Grouping logic remains the same
       const dateGroups = filteredData.reduce((acc, row) => {
         const dStr = row.nextDate.toLocaleDateString('en-GB').replace(/\//g, '-');
         if (!acc[dStr]) acc[dStr] = [];
@@ -96,15 +95,12 @@ const CourtDiaryFinalFix = () => {
         return acc;
       }, {});
 
-      // Sort dates chronologically
-      const sortedDates = Object.keys(dateGroups).sort((a, b) => {
-        return new Date(a.split('-').reverse().join('-')) - new Date(b.split('-').reverse().join('-'));
-      });
+      const sortedDates = Object.keys(dateGroups).sort((a, b) => 
+        new Date(a.split('-').reverse().join('-')) - new Date(b.split('-').reverse().join('-'))
+      );
 
       sortedDates.forEach((dateKey) => {
         const records = dateGroups[dateKey];
-        
-        // 1. Get Day of the Week
         const dateObj = records[0].nextDate;
         const dayName = dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
 
@@ -116,21 +112,23 @@ const CourtDiaryFinalFix = () => {
 
         const maxRows = Math.max(...Object.values(stageGroups).map(arr => arr.length));
         
-        // Check for page break (including space for signature now)
-        if (currentY + (maxRows * 8) + 20 > 270) { doc.addPage(); currentY = 15; }
+        // Safety check for page height (maxRows * rowHeight + headers + signature)
+        if (currentY + (maxRows * 8) + 30 > 280) { doc.addPage(); currentY = 15; }
 
-        // 2. Display Date + Day
         doc.setFontSize(10).setFont("helvetica", "bold");
         doc.text(`DATE: ${dateKey} (${dayName.toUpperCase()}) - ${caseType.toUpperCase()}`, 14, currentY);
         currentY += 5;
 
-        let head = [['Judgment', 'Arguments', 'Hearing', 'Evidence', 'Evid. PH']];
+        // 1. Added 'S.No' to the header
+        let head = [['S.No', 'Judgment', 'Arguments', 'Hearing', 'Evidence', 'Evid. PH']];
         if (caseType === 'civil') head[0].push('Issues');
         head[0].push('Other');
 
         const body = [];
         for (let i = 0; i < maxRows; i++) {
+          // 2. Added Row Index (i + 1) for Serial Number
           let row = [
+            i + 1, 
             stageGroups['Judgment'][i] || '', 
             stageGroups['Arguments'][i] || '', 
             stageGroups['Hearing'][i] || '', 
@@ -142,29 +140,36 @@ const CourtDiaryFinalFix = () => {
           body.push(row);
         }
 
+        // 3. Added Footer Row for Total Cases
+        const totalCases = records.length;
+        const footerRow = [
+          { content: `TOTAL CASES FOR THE DAY: ${totalCases}`, colSpan: head[0].length, styles: { halign: 'right', fontStyle: 'bold', fillColor: [245, 245, 245] } }
+        ];
+        body.push(footerRow);
+
         autoTable(doc, {
           startY: currentY,
           head: head,
           body: body,
           theme: 'grid',
-          styles: { fontSize: 7, cellPadding: 1.5, halign: 'center', overflow: 'linebreak' },
+          styles: { fontSize: 7, cellPadding: 1.5, halign: 'center' },
           headStyles: { fillColor: [230, 230, 230], textColor: 0, lineWidth: 0.1 },
-          didDrawPage: (data) => { 
-            currentY = data.cursor.y; 
-          }
+          columnStyles: { 0: { cellWidth: 10 } }, // Keep S.No column narrow
+          didDrawPage: (data) => { currentY = data.cursor.y; }
         });
 
-        // 3. Add Signature Line after each table
+        // 4. Presiding Officer Signature
         currentY += 8;
         doc.setFontSize(9).setFont("helvetica", "normal");
-        doc.text("Signature of Presiding Officer: _____________", 120, currentY);
-        currentY += 15; // Extra spacing before the next date's table
+        doc.text("Signature of Presiding Officer: __________________________", 120, currentY);
+        currentY += 15; 
       });
 
-      doc.save(`Diary_${caseType}_${new Date().getTime()}.pdf`);
+      doc.save(`Court_Diary_${caseType}.pdf`);
       setIsLoading(false);
     }, 100);
   };
+
 
   return (
     <div style={styles.container}>
