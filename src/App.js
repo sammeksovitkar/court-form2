@@ -167,7 +167,9 @@ const updateCourtConfig = (newData) => {
                 </header>
                 <main className="flex-1 p-4 md:p-8">{renderContent()}</main>
                 {/* <footer className="bg-white text-center p-3 text-xs text-gray-400 border-t mt-auto no-print"> &copy; {new Date().getFullYear()} </footer> */}
-                            <footer className="bg-white text-center p-3 text-xs text-gray-400 border-t mt-auto no-print">Developed By Sammek Sovitkar (JR Clark Manmad City)</footer>
+                           <footer className="bg-white text-center p-4 text-base font-bold text-gray-900 border-t mt-auto no-print shadow-sm">
+  Developed By Sammek Sovitkar (JR Clerk Manmad City)
+</footer>
 
             </div>
             {isSidebarOpen && <div className="fixed inset-0 bg-black opacity-50 z-10 lg:hidden" onClick={() => setIsSidebarOpen(false)}></div>}
